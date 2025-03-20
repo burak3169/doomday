@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sevimin Doğum Günü</title>
+    <style>
+        body {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ff9a9e, #fad0c4);
+            color: #fff;
+            overflow-y: scroll;
+        }
+        h1 { font-size: 2.5em; }
+        #countdown {
+            font-size: 2em;
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            display: inline-block;
+        }
+        #content, #question, #messageBox, #loveMessage {
+            display: none;
+        }
+        #question {
+            margin-top: 50px;
+        }
+        button {
+            font-size: 1.5em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        #yesBtn { background: #28a745; color: white; }
+        #noBtn { background: #dc3545; color: white; position: absolute; }
+        #photo {
+            max-width: 300px;
+            margin-top: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        #messageBox {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 10px;
+            width: 60%;
+            margin: auto;
+            text-align: left;
+            font-size: 1.2em;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+        #loveMessage {
+            font-size: 2em;
+            font-weight: bold;
+            color: #ff4081;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sevim(çiçeğim) doğum gününe kalan süre</h1>
+    <div id="countdown"></div>
+    <div id="content">
+        <img id="photo" src="doom.jpg" alt="Doğum Günü Fotoğrafı">
+        <div id="question">
+            <h2>Beni Seviyor Musun?</h2>
+            <button id="yesBtn" onclick="showLoveMessage()">Evet</button>
+            <button id="noBtn">Hayır</button>
+        </div>
+    </div>
+    <div id="loveMessage">Bende seni çok seviyorum! 💖</div>
+    <div id="messageBox">
+        <p>Doğum günü mesajın burada!</p>
+    </div>
+    
+    <script>
+        const targetDate = new Date('April 12, 2025 00:00:00').getTime();
+        const countdownElement = document.getElementById("countdown");
+        const content = document.getElementById("content");
+        const loveMessage = document.getElementById("loveMessage");
+        const messageBox = document.getElementById("messageBox");
+        const noBtn = document.getElementById("noBtn");
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+                countdownElement.innerHTML = `${days} gün ${hours} saat ${minutes} dakika ${seconds} saniye kaldı!`;
+            } else {
+                countdownElement.style.display = "none";
+                content.style.display = "block";
+                document.getElementById("question").style.display = "block";
+            }
+        }
+        setInterval(updateCountdown, 1000);
+
+        function moveNoButton() {
+            const x = Math.random() * (window.innerWidth - 100);
+            const y = Math.random() * (window.innerHeight - 50);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
+        }
+        noBtn.addEventListener("mouseover", moveNoButton);
+
+        function showLoveMessage() {
+            content.style.display = "none";
+            loveMessage.style.display = "block";
+            setTimeout(() => {
+                loveMessage.style.display = "none";
+                messageBox.style.display = "block";
+                window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
